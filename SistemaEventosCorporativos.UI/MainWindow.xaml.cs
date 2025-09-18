@@ -1,13 +1,6 @@
-﻿using System.Text;
+﻿using SistemaEventosCorporativos.DATA;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using SistemaEventosCorporativos.Core;
 
 namespace SistemaEventosCorporativos.UI
 {
@@ -20,5 +13,23 @@ namespace SistemaEventosCorporativos.UI
         {
             InitializeComponent();
         }
+
+        private void BtnAbrirCadastroEvento_Click(object sender, RoutedEventArgs e)
+        {
+            CadastroEvento janela = new CadastroEvento();
+            janela.ShowDialog();
+
+        }
+        private void BtnAbrirConsultaEventos_Click(object sender, RoutedEventArgs e)
+        {
+           ConsultaEventos janela = new ConsultaEventos();
+           janela.ShowDialog();
+        }
+        private void BtnAbrirCadastroTipoEventos_Click(object sender, RoutedEventArgs e)
+        {
+            var cadastrarTipoEvento = new UserControls.CadastrarTipoEvento();
+            ContentArea.Content = cadastrarTipoEvento;
+        }
+
     }
 }

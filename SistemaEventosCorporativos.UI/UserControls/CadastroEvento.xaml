@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="SistemaEventosCorporativos.UI.CadastroEvento"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:SistemaEventosCorporativos.UI"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Nome:" Grid.Row="0"/>
+        <TextBox Name="txtNome" Grid.Row="0" Margin="100,0,0,5" Width="250"/>
+
+        <TextBlock Text="Data Início:" Grid.Row="1"/>
+        <DatePicker Name="dpDataInicio" Grid.Row="1" Margin="100,0,0,5"/>
+
+        <TextBlock Text="Data Fim:" Grid.Row="2"/>
+        <DatePicker Name="dpDataFim" Grid.Row="2" Margin="100,0,0,5"/>
+
+        <TextBlock Grid.Row="3">
+            <Run Text="Local"/>
+            <Run Language="pt-br" Text=" (CEP)"/>
+            <Run Text=":"/>
+        </TextBlock>
+        <TextBox Name="txtLocal" Grid.Row="3" Margin="100,0,0,5" Width="250"/>
+
+        <TextBlock Text="Observações:" Grid.Row="4"/>
+        <TextBox Name="txtObservacoes" Grid.Row="4" Margin="100,0,0,5" Width="250"/>
+
+        <TextBlock Text="Lotação Máx.:" Grid.Row="5"/>
+        <TextBox Name="txtLotacao" Grid.Row="5" Margin="100,0,0,5" Width="100"/>
+
+        <TextBlock Text="Orçamento Máx.:" Grid.Row="6"/>
+        <TextBox Name="txtOrcamento" Grid.Row="6" Margin="100,0,0,5" Width="100"/>
+
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button Content="Salvar" Width="100" Height="30" Margin="0,0,10,0" Click="BtnSalvar_Click"/>
+            <Button Content="Voltar" Width="100" Height="30" Click="BtnVoltar_Click"/>
+        </StackPanel>
+
+        <ComboBox Name="cbTipoEvento" DisplayMemberPath="Descricao" SelectedValuePath="Id" 
+                  Grid.Row="7" Margin="300,0,0,200" Width="200"/>
+    </Grid>
+</UserControl>

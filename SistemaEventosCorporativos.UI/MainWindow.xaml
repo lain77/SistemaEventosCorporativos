@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SistemaEventosCorporativos.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Sistema de Eventos" Height="500" Width="800">
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <!-- Menu lateral -->
+            <ColumnDefinition Width="*"/>
+            <!-- Área de conteúdo -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Menu lateral -->
+        <StackPanel Grid.Column="0" Background="#2E2E2E" Margin="5">
+            <Button Content="Cadastrar Evento" Height="40" Margin="0,10,0,0" Click="BtnAbrirCadastroEvento_Click"/>
+            <Button Content="Consultar Eventos" Height="40" Margin="0,10,0,0" Click="BtnAbrirConsultaEventos_Click"/>
+            <Button Content="Cadastrar Tipo de Evento" Height="40" Margin="0,10,0,0" Click="BtnAbrirCadastroTipoEventos_Click"/>
+            <Button Content="Cadastrar Fornecedor" Height="40" Margin="0,10,0,0" Click="BtnAbrirCadastroFornecedor_Click"/>
+            <Button Content="Cadastrar Participante" Height="40" Margin="0,10,0,0" Click="BtnAbrirCadastroParticipante_Click"/>
+            <Button Content="Consultar Fornecedores" Height="40" Margin="0,10,0,0" Click="BtnAbrirEditarFornecedor_Click"/>
+            <Button Content="Consultar Participantes" Height="40" Margin="0,10,0,0" Click="BtnAbrirEditarParticipante_Click"/>
+        </StackPanel>
+
+        <!-- Área de conteúdo -->
+        <ContentControl x:Name="ContentArea" Grid.Column="1" Margin="5" Background="#1C1C1C"/>
     </Grid>
 </Window>

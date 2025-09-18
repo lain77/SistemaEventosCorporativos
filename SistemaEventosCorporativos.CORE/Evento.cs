@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaEventosCorporativos.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,8 @@ namespace SistemaEventosCorporativos.Core
     {
         public int Id {  get; set; } 
         public string Nome {  get; set; }
-        public DateTime DataInicio {  get; set; }
-        public DateTime DataFim { get; set; }
+        public DateOnly DataInicio { get; set; }   
+        public DateOnly DataFim { get; set; }
         public string Local {  get; set; }
         public string Observacoes { get; set; }
         public int LotacaoMaxima { get; set; }
@@ -20,5 +21,9 @@ namespace SistemaEventosCorporativos.Core
         //Relacionamento com TipoEvento (1 evento tem 1 tipo)
         public int TipoEventoId { get; set; }
         public TipoEvento TipoEvento { get; set; }
+
+        public int EnderecoId { get; set; }
+        public Endereco Endereco { get; set; }
+
     }
 }
