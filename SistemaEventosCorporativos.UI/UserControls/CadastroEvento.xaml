@@ -3,53 +3,82 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:SistemaEventosCorporativos.UI"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="700" d:DesignWidth="800">
 
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Orientation="Vertical" VerticalAlignment="Top">
 
-        <TextBlock Text="Nome:" Grid.Row="0"/>
-        <TextBox Name="txtNome" Grid.Row="0" Margin="100,0,0,5" Width="250"/>
+            <!-- DADOS DO EVENTO -->
+            <GroupBox Header="Dados do Evento" FontWeight="Bold" Margin="0,0,0,20">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Nome:" Width="120" VerticalAlignment="Center"/>
+                        <TextBox Name="txtNome" Width="400"/>
+                    </StackPanel>
 
-        <TextBlock Text="Data Início:" Grid.Row="1"/>
-        <DatePicker Name="dpDataInicio" Grid.Row="1" Margin="100,0,0,5"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Tipo de Evento:" Width="120" VerticalAlignment="Center"/>
+                        <ComboBox Name="cbTipoEvento" Width="200" DisplayMemberPath="Descricao" SelectedValuePath="Id"/>
+                    </StackPanel>
 
-        <TextBlock Text="Data Fim:" Grid.Row="2"/>
-        <DatePicker Name="dpDataFim" Grid.Row="2" Margin="100,0,0,5"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Data Início:" Width="120" VerticalAlignment="Center"/>
+                        <DatePicker Name="dpDataInicio" Width="150"/>
+                        <TextBlock Text="Data Fim:" Width="100" Margin="20,0,0,0" VerticalAlignment="Center"/>
+                        <DatePicker Name="dpDataFim" Width="150"/>
+                    </StackPanel>
 
-        <TextBlock Grid.Row="3">
-            <Run Text="Local"/>
-            <Run Language="pt-br" Text=" (CEP)"/>
-            <Run Text=":"/>
-        </TextBlock>
-        <TextBox Name="txtLocal" Grid.Row="3" Margin="100,0,0,5" Width="250"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Lotação Máx.:" Width="120" VerticalAlignment="Center"/>
+                        <TextBox Name="txtLotacao" Width="100"/>
+                        <TextBlock Text="Orçamento Máx.:" Width="120" Margin="20,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="txtOrcamento" Width="150"/>
+                    </StackPanel>
 
-        <TextBlock Text="Observações:" Grid.Row="4"/>
-        <TextBox Name="txtObservacoes" Grid.Row="4" Margin="100,0,0,5" Width="250"/>
+                    <StackPanel Orientation="Vertical" Margin="0,5">
+                        <TextBlock Text="Observações:"/>
+                        <TextBox Name="txtObservacoes" Width="550" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
 
-        <TextBlock Text="Lotação Máx.:" Grid.Row="5"/>
-        <TextBox Name="txtLotacao" Grid.Row="5" Margin="100,0,0,5" Width="100"/>
+            <!-- ENDEREÇO DO EVENTO -->
+            <GroupBox Header="Endereço do Evento" FontWeight="Bold" Margin="0,0,0,20">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="CEP:" Width="120" VerticalAlignment="Center"/>
+                        <TextBox Name="txtCep" Width="100"/>
+                        <Button Content="Buscar CEP" Width="100" Margin="10,0,0,0" Click="BtnBuscarCep_Click"/>
+                    </StackPanel>
 
-        <TextBlock Text="Orçamento Máx.:" Grid.Row="6"/>
-        <TextBox Name="txtOrcamento" Grid.Row="6" Margin="100,0,0,5" Width="100"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Rua:" Width="120" VerticalAlignment="Center"/>
+                        <TextBox Name="txtRua" Width="400"/>
+                    </StackPanel>
 
-        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-            <Button Content="Salvar" Width="100" Height="30" Margin="0,0,10,0" Click="BtnSalvar_Click"/>
-            <Button Content="Voltar" Width="100" Height="30" Click="BtnVoltar_Click"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Número:" Width="120" VerticalAlignment="Center"/>
+                        <TextBox Name="txtNumero" Width="100"/>
+                        <TextBlock Text="Bairro:" Width="100" Margin="20,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="txtBairro" Width="200"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Cidade:" Width="120" VerticalAlignment="Center"/>
+                        <TextBox Name="txtCidade" Width="200"/>
+                        <TextBlock Text="Estado:" Width="100" Margin="20,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="txtEstado" Width="50"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- BOTÕES -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Button Content="Salvar" Width="100" Height="30" Margin="0,0,10,0" Click="BtnSalvar_Click"/>
+                <Button Content="Voltar" Width="100" Height="30" Click="BtnVoltar_Click"/>
+            </StackPanel>
+
         </StackPanel>
-
-        <ComboBox Name="cbTipoEvento" DisplayMemberPath="Descricao" SelectedValuePath="Id" 
-                  Grid.Row="7" Margin="300,0,0,200" Width="200"/>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

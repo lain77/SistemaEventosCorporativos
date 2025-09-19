@@ -1,28 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.DATA;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SistemaEventosCorporativos.UI.UserControls
 {
-    /// <summary>
-    /// Interação lógica para CadastrarFornecedor.xam
-    /// </summary>
     public partial class CadastrarFornecedor : UserControl
     {
+        public event Action? OnVoltar;
+
         public CadastrarFornecedor()
         {
             InitializeComponent();
+            CarregarEventos();
+        }
+
+        private void BtnSalvar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var context = new AppDbContext())
+                {
+                    Fornecedor fornecedor = new Fornecedor
+                    {
+                        NomeServico = txtNomeServico.Text,
+                        CNPJ = txtCnpj.Text,
+                        Valor = decimal.Parse(txtValor.Text),
+                        Tipo = txtTipo.Text,
+                        EventoId = (int)cbEvento.SelectedValue
+                    };
+                    context.Fornecedores.Add(fornecedor);
+                    context.SaveChanges();
+                }
+                MessageBox.Show("Fornecedor cadastrado.");
+                OnVoltar?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro: " + ex.Message);
+            }
+        }
+
+        private void BtnVoltar_Click(object sender, RoutedEventArgs e)
+        {
+            OnVoltar?.Invoke();
+        }
+
+        private void CarregarEventos()
+        {
+            using (var context = new AppDbContext())
+            {
+                var eventos = context.Eventos.ToList();
+                cbEvento.ItemsSource = eventos;
+                cbEvento.DisplayMemberPath = "Nome";
+                cbEvento.SelectedValuePath = "Id";
+            }
         }
     }
 }

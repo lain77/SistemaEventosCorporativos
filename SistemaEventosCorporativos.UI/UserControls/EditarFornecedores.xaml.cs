@@ -8,9 +8,14 @@ using System.Windows.Media;
 
 namespace SistemaEventosCorporativos.UI.UserControls
 {
-    public partial class EditarFornecedor : UserControl
+    public partial class EditarFornecedores : UserControl
     {
-        public EditarFornecedor()
+        private int fornecedorId;
+
+
+        public event Action? OnVoltar;
+
+        public EditarFornecedores(int fornecedorId)
         {
             InitializeComponent();
             this.fornecedorId = fornecedorId;
@@ -21,7 +26,9 @@ namespace SistemaEventosCorporativos.UI.UserControls
         {
             using (var context = new AppDbContext())
             {
-                var fornecedor = context.Fornecedores.Find(fornecedorId);
+                var fornecedor = context.Fornecedores
+                                        .FirstOrDefault(f => f.Id == fornecedorId);
+
                 if (fornecedor != null)
                 {
                     fornecedor_txtNome.Text = fornecedor.NomeServico;
@@ -42,7 +49,9 @@ namespace SistemaEventosCorporativos.UI.UserControls
             {
                 using (var context = new AppDbContext())
                 {
-                    var fornecedor = context.Fornecedores.Find(fornecedorId);
+                    var fornecedor = context.Fornecedores
+                                            .FirstOrDefault(f => f.Id == fornecedorId);
+
                     if (fornecedor != null)
                     {
                         fornecedor.NomeServico = fornecedor_txtNome.Text;

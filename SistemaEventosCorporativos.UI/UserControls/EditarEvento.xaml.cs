@@ -1,9 +1,12 @@
-﻿using SistemaEventosCorporativos.DATA;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.DATA;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.TextFormatting;
 
 namespace SistemaEventosCorporativos.UI.UserControls
 {
@@ -25,19 +28,33 @@ namespace SistemaEventosCorporativos.UI.UserControls
         {
             using (var context = new AppDbContext())
             {
-                var evento = context.Eventos.Find(eventoId);
+                var evento = context.Eventos
+                    .Include(e => e.Endereco)
+                    .FirstOrDefault(e => e.Id == eventoId);
+
                 if (evento != null)
                 {
                     txtNome.Text = evento.Nome;
                     dpDataInicio.SelectedDate = evento.DataInicio.ToDateTime(TimeOnly.MinValue);
                     dpDataFim.SelectedDate = evento.DataFim.ToDateTime(TimeOnly.MinValue);
-                    txtLocal.Text = evento.Local;
                     txtObservacoes.Text = evento.Observacoes;
                     txtLotacao.Text = evento.LotacaoMaxima.ToString();
                     txtOrcamento.Text = evento.OrcamentoMaximo.ToString("F2", CultureInfo.InvariantCulture);
+                    cbTipoEvento.SelectedValue = evento.TipoEventoId;
+
+                    if (evento.Endereco != null)
+                    {
+                        txtCep.Text = evento.Endereco.CEP;
+                        txtRua.Text = evento.Endereco.Rua;
+                        txtNumero.Text = evento.Endereco.Numero;
+                        txtBairro.Text = evento.Endereco.Bairro;
+                        txtCidade.Text = evento.Endereco.Cidade;
+                        txtEstado.Text = evento.Endereco.Estado;
+                    }
                 }
             }
         }
+
 
         private void BtnSalvar_Click(object sender, RoutedEventArgs e)
         {
@@ -45,13 +62,15 @@ namespace SistemaEventosCorporativos.UI.UserControls
             {
                 using (var context = new AppDbContext())
                 {
-                    var evento = context.Eventos.Find(eventoId);
+                    var evento = context.Eventos
+                        .Include(ev => ev.Endereco)
+                        .FirstOrDefault(ev => ev.Id == eventoId);
+
                     if (evento != null)
                     {
                         evento.Nome = txtNome.Text;
                         evento.DataInicio = DateOnly.FromDateTime(dpDataInicio.SelectedDate ?? DateTime.Now);
                         evento.DataFim = DateOnly.FromDateTime(dpDataFim.SelectedDate ?? DateTime.Now);
-                        evento.Local = txtLocal.Text;
                         evento.Observacoes = txtObservacoes.Text;
 
                         if (int.TryParse(txtLotacao.Text, out int lotacao))
@@ -60,13 +79,25 @@ namespace SistemaEventosCorporativos.UI.UserControls
                         if (decimal.TryParse(txtOrcamento.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal orcamento))
                             evento.OrcamentoMaximo = orcamento;
 
+                        if (evento.Endereco == null)
+                        {
+                            evento.Endereco = new Endereco();
+                        }
+
+                        evento.Endereco.CEP = txtCep.Text;
+                        evento.Endereco.Rua = txtRua.Text;
+                        evento.Endereco.Numero = txtNumero.Text;
+                        evento.Endereco.Bairro = txtBairro.Text;
+                        evento.Endereco.Cidade = txtCidade.Text;
+                        evento.Endereco.Estado = txtEstado.Text;
+
                         context.SaveChanges();
                     }
                 }
 
                 MessageBox.Show("Evento atualizado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // 🔹 Ao salvar, volta para a lista
+                // 🔹 Volta para a tela de consulta
                 OnVoltar?.Invoke();
             }
             catch (Exception ex)
@@ -74,6 +105,8 @@ namespace SistemaEventosCorporativos.UI.UserControls
                 MessageBox.Show($"Erro ao atualizar o evento: {ex.Message}", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
 
         private void TxtNome_GotFocus(object sender, RoutedEventArgs e)
         {

@@ -12,7 +12,9 @@ namespace SistemaEventosCorporativos.Core
         public string Nome { get; set; }
         public string CPF { get; set; }
         public string Telefone { get; set; }
-        public string Tipo { get; set; } 
+        public string Tipo { get; set; }
 
+        public int EventoId { get; set; }
+        public Evento Evento { get; set; }
     }
 }

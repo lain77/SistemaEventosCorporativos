@@ -61,10 +61,8 @@ namespace SistemaEventosCorporativos.UI.UserControls
             {
                 var editar = new EditarEvento(eventoSelecionado.Id);
 
-                // coloca o UserControl de edição no ContentArea
                 ContentArea.Content = editar;
 
-                // 🔹 define o que fazer quando clicar em voltar ou salvar
                 editar.OnVoltar += () =>
                 {
                     ContentArea.Content = null;

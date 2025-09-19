@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.DATA;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +23,67 @@ namespace SistemaEventosCorporativos.UI.UserControls
     /// </summary>
     public partial class ConsultarParticipante : UserControl
     {
+
+        public event Action? OnVoltar;
+
         public ConsultarParticipante()
         {
             InitializeComponent();
+            CarregarParticipante();
         }
+
+        private void CarregarParticipante()
+        {
+            using (var context = new AppDbContext())
+            {
+                var participantes = context.Participantes
+                                           .Include(p => p.Evento) 
+                                           .ToList();
+
+                dataGridParticipantes.ItemsSource = participantes;
+            }
+        }
+
+        private void BtnExcluirParticipantes_Click(object sender, RoutedEventArgs e)
+        {
+            if(dataGridParticipantes.SelectedItem is Participante participanteSelecionado)
+            {
+                var resultado = MessageBox.Show(
+                    $"Deseja mesmo excluir o participante '{participanteSelecionado.Nome}'?",
+                    "Confirmar?",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if( resultado == MessageBoxResult.Yes )
+                {
+                    using ( var context = new AppDbContext())
+                    {
+                        context.Participantes.Remove(participanteSelecionado);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selecione um participante");
+            }
+        }
+
+        private void DataGridParticipantes_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (dataGridParticipantes.SelectedItem is Participante participanteSelecionado)
+            {
+                var editar = new EditarParticipante(participanteSelecionado.Id);
+                ContentArea.Content = editar;
+
+                editar.OnVoltar += () =>
+                {
+                    ContentArea.Content = null;
+                    CarregarParticipante();
+                };
+            }
+        }
+
+
     }
 }
