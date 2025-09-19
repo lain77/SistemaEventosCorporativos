@@ -1,7 +1,7 @@
 ﻿using SistemaEventosCorporativos.DATA;
-using SistemaEventosCorporativos.Core;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,11 +10,7 @@ namespace SistemaEventosCorporativos.UI.UserControls
 {
     public partial class EditarFornecedor : UserControl
     {
-        private int fornecedorId;
-
-        public event Action? OnVoltar;
-
-        public EditarFornecedor(int fornecedorId)
+        public EditarFornecedor()
         {
             InitializeComponent();
             this.fornecedorId = fornecedorId;
