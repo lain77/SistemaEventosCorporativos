@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\sr71.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,6 +23,12 @@
   <ItemGroup>
     <ProjectReference Include="..\SistemaEventosCorporativos.CORE\SistemaEventosCorporativos.CORE.csproj" />
     <ProjectReference Include="..\SistemaEventosCorporativos.DATA\SistemaEventosCorporativos.DATA.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\sr71.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

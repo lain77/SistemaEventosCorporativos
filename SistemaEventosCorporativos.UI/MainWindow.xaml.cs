@@ -68,5 +68,16 @@ namespace SistemaEventosCorporativos.UI
                 ContentArea.Content = null;
             };
         }
+
+        private void BtnAbrirRelatorios_Click(object sender, RoutedEventArgs e)
+        {
+            var relatorios = new Relatórios();
+            ContentArea.Content = relatorios;
+
+            relatorios.OnVoltar += () =>
+            {
+                ContentArea.Content = null;
+            };
+        }
     }
 }

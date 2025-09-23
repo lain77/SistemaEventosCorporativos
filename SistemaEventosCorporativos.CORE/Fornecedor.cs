@@ -19,9 +19,5 @@ namespace SistemaEventosCorporativos.Core
 
         public string Tipo { get; set; }
 
-        [Column("EventoId")]
-        public int EventoId { get; set; }
-
-        public Evento evento { get; set; }
     }
 }

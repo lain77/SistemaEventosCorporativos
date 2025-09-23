@@ -1,27 +1,89 @@
 ﻿<UserControl x:Class="SistemaEventosCorporativos.UI.UserControls.EditarFornecedores"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel Margin="10">
-            <Button Content="Voltar" Click="BtnVoltar_Click" Margin="0,0,0,10"/>
 
-            <!-- Nome do fornecedor -->
-            <TextBox x:Name="fornecedor_txtNome" Text="Nome do Serviço" Foreground="Gray"
-                     GotFocus="TxtNome_GotFocus" LostFocus="TxtNome_LostFocus" Margin="0,0,0,10"/>
+    <Grid Background="#F5F5F5" Margin="10">
+        <Border Background="White" CornerRadius="10" Padding="20" BorderBrush="#DDD" BorderThickness="1">
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0">
 
-            <!-- Valor do serviço -->
-            <TextBox x:Name="fornecedor_txtValor" Text="0.00" Foreground="Gray"
-                     GotFocus="TxtValor_GotFocus" LostFocus="TxtValor_LostFocus" Margin="0,0,0,10"/>
+                <!-- Botão voltar -->
+                <Button Content="← Voltar" 
+                        Width="100" Height="30" 
+                        HorizontalAlignment="Left" 
+                        Margin="0,0,0,15"
+                        Click="BtnVoltar_Click"/>
 
-            <!-- CNPJ -->
-            <TextBox x:Name="fornecedor_txtCnpj" Text="CNPJ" Foreground="Gray"
-                     GotFocus="TxtCnpj_GotFocus" LostFocus="TxtCnpj_LostFocus" Margin="0,0,0,10"/>
+                <!-- Nome do Serviço -->
+                <TextBox x:Name="fornecedor_txtNome"
+                         Text="Nome do Serviço"
+                         Tag="Nome do Serviço"
+                         Foreground="Gray"
+                         Padding="8"
+                         Margin="0,0,0,15"
+                         GotFocus="Placeholder_GotFocus"
+                         LostFocus="Placeholder_LostFocus"/>
 
-            <Button Content="Salvar" Click="BtnSalvar_Click" Width="100" Height="30"/>
-        </StackPanel>
+                <!-- Valor -->
+                <TextBox x:Name="fornecedor_txtValor"
+                         Text="0.00"
+                         Tag="0.00"
+                         Foreground="Gray"
+                         Padding="8"
+                         Margin="0,0,0,15"
+                         GotFocus="Placeholder_GotFocus"
+                         LostFocus="Placeholder_LostFocus"/>
+
+                <!-- CNPJ -->
+                <TextBox x:Name="fornecedor_txtCnpj"
+                         Text="CNPJ"
+                         Tag="CNPJ"
+                         Foreground="Gray"
+                         Padding="8"
+                         Margin="0,0,0,20"
+                         GotFocus="Placeholder_GotFocus"
+                         LostFocus="Placeholder_LostFocus"/>
+
+                <!-- Botão salvar -->
+                <Button Content="Salvar"
+                        Width="120" Height="35"
+                        HorizontalAlignment="Right"
+                        Background="#4CAF50" Foreground="White" BorderThickness="0" Cursor="Hand"
+                        Click="BtnSalvar_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#4CAF50"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#45A049"/>
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

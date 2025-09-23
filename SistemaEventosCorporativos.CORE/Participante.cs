@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SistemaEventosCorporativos.Core
 {
+
+
+
     public class Participante
     {
         public int Id { get; set; }
@@ -14,7 +17,5 @@ namespace SistemaEventosCorporativos.Core
         public string Telefone { get; set; }
         public string Tipo { get; set; }
 
-        public int EventoId { get; set; }
-        public Evento Evento { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.CORE;
 using SistemaEventosCorporativos.DATA;
 using System;
 using System.Linq;
@@ -28,20 +29,35 @@ namespace SistemaEventosCorporativos.UI.UserControls
                         NomeServico = txtNomeServico.Text,
                         CNPJ = txtCnpj.Text,
                         Valor = decimal.Parse(txtValor.Text),
-                        Tipo = txtTipo.Text,
+                        Tipo = txtTipo.Text
+                    };
+
+                    context.Fornecedores.Add(fornecedor);
+                    context.SaveChanges(); 
+
+                    FornecedorEvento fornecedorEvento = new FornecedorEvento
+                    {
+                        FornecedorId = fornecedor.Id,
                         EventoId = (int)cbEvento.SelectedValue
                     };
-                    context.Fornecedores.Add(fornecedor);
+
+                    context.FornecedorEvento.Add(fornecedorEvento);
                     context.SaveChanges();
+
+                    MessageBox.Show("Fornecedor cadastrado no evento com sucesso!");
+                    OnVoltar?.Invoke();
                 }
-                MessageBox.Show("Fornecedor cadastrado.");
-                OnVoltar?.Invoke();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro: " + ex.Message);
+                string mensagemErro = ex.Message;
+                if (ex.InnerException != null)
+                    mensagemErro += "\nInnerException: " + ex.InnerException.Message;
+
+                MessageBox.Show("Erro ao cadastrar fornecedor: " + mensagemErro);
             }
         }
+
 
         private void BtnVoltar_Click(object sender, RoutedEventArgs e)
         {

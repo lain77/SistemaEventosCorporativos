@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Lista de Participantes com sombra e cantos arredondados -->
+        <!-- Lista de Participantes -->
         <Border Grid.Row="0" Background="White" CornerRadius="10" Padding="15" Margin="0,0,0,15" 
                 BorderBrush="#DDD" BorderThickness="1">
             <Border.Effect>
@@ -31,47 +31,25 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                         <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" Width="*"/>
-                        <DataGridTextColumn Header="Evento" Binding="{Binding Evento.Nome}" Width="*"/>
-                        <DataGridTextColumn Header="CPF" Binding="{Binding Cpf}" Width="100"/>
+                        <DataGridTextColumn Header="CPF" Binding="{Binding CPF}" Width="120"/>
                         <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}" Width="100"/>
                         <DataGridTextColumn Header="Telefone" Binding="{Binding Telefone}" Width="120"/>
+                        <DataGridTextColumn Header="Eventos" Width="*">
+                            <DataGridTextColumn.Binding>
+                                <Binding Path=".">
+                                    <Binding.Converter>
+                                        <local:EventosParticipanteConverter/>
+                                    </Binding.Converter>
+                                </Binding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
                     <Button Content="Excluir Participante" Width="160" Height="35" 
                             Background="#FF5555" Foreground="White" BorderThickness="0" Cursor="Hand"
-                            Click="BtnExcluirParticipantes_Click">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#FF5555"/>
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-                                <Setter Property="RenderTransform">
-                                    <Setter.Value>
-                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#FF3333"/>
-                                        <Setter Property="RenderTransform">
-                                            <Setter.Value>
-                                                <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="True">
-                                        <Setter Property="RenderTransform">
-                                            <Setter.Value>
-                                                <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                            Click="BtnExcluirParticipantes_Click"/>
                 </StackPanel>
             </StackPanel>
         </Border>

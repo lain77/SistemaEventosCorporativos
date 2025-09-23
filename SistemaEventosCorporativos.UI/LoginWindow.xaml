@@ -1,0 +1,56 @@
+﻿<Window x:Class="SistemaEventosCorporativos.UI.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Entrar"
+        WindowState="Normal"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Black">
+
+    <Grid>
+        <!-- Fundo com gradiente -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#0A0A0A" Offset="0"/>
+                <GradientStop Color="#1C1C1C" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- SR-71 com animação -->
+        <Image Source="/SistemaEventosCorporativos.UI;component/Assets/sr71.png"
+               Width="800" Height="400"
+               HorizontalAlignment="Center" VerticalAlignment="Top"
+               RenderTransformOrigin="0.5,0.5"
+               Margin="0,100,0,0">
+            <Image.RenderTransform>
+                <RotateTransform Angle="0"/>
+            </Image.RenderTransform>
+            <Image.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle"
+                                             From="-5" To="5"
+                                             Duration="0:0:2"
+                                             AutoReverse="True"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Image.Triggers>
+        </Image>
+
+        <!-- Botão entrar grande -->
+        <Button Content="Entrar"
+                Width="400" Height="100"
+                FontSize="36"
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,550,0,0"
+                Background="#2B3F74"
+                Foreground="White"
+                BorderThickness="0"
+                Cursor="Hand"
+                Click="BtnEntrar_Click"/>
+    </Grid>
+</Window>

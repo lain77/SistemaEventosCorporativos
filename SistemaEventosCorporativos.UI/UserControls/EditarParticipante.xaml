@@ -5,15 +5,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel Margin="10">
-            <Button Content="Voltar" Click="BtnVoltar_Click" Margin="0,0,0,10"/>
-            <TextBox x:Name="txtNome" Text="Nome do Participante" Foreground="Gray"
-                     GotFocus="TxtNome_GotFocus" LostFocus="TxtNome_LostFocus"/>
-            <TextBox x:Name="txtTelefone"/>
-            <TextBox x:Name="txtCpf"/>
-            <TextBox x:Name="txtTipo"/>
-            <Button Content="Salvar" Click="BtnSalvar_Click"/>
+    <Grid Background="#F5F5F5" Margin="10">
+        <StackPanel>
+
+            <Button Content="Voltar" Click="BtnVoltar_Click" Width="100" Margin="0,0,0,10"/>
+
+            <GroupBox Header="Dados do Participante" Margin="0,0,0,15">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Nome:" Width="120" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtNome" Width="400"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="CPF:" Width="120" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtCpf" Width="200"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Telefone:" Width="120" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtTelefone" Width="200"/>
+                        <TextBlock Text="Tipo:" Width="50" Margin="20,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtTipo" Width="150"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Eventos Inscritos">
+                <DataGrid x:Name="dataGridEventos" AutoGenerateColumns="False" Height="200"
+                          CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
+                          AlternatingRowBackground="#F9F9F9" RowBackground="White"
+                          GridLinesVisibility="Horizontal" HeadersVisibility="Column" ColumnHeaderHeight="30">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Evento" Binding="{Binding Evento.Nome}" Width="*"/>
+                        <DataGridTextColumn Header="Início" Binding="{Binding Evento.DataInicio}" Width="120"/>
+                        <DataGridTextColumn Header="Fim" Binding="{Binding Evento.DataFim}" Width="120"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+
+            <Button Content="Salvar" Width="120" Height="35" Margin="0,10,0,0" Click="BtnSalvar_Click"/>
+
         </StackPanel>
     </Grid>
 </UserControl>

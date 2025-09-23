@@ -12,7 +12,6 @@ namespace SistemaEventosCorporativos.UI.UserControls
     {
         private int fornecedorId;
 
-
         public event Action? OnVoltar;
 
         public EditarFornecedores(int fornecedorId)
@@ -75,61 +74,24 @@ namespace SistemaEventosCorporativos.UI.UserControls
             }
         }
 
-        #region Placeholders simulados
-        private void TxtNome_GotFocus(object sender, RoutedEventArgs e)
+        // 🔹 Métodos genéricos de placeholder
+        private void Placeholder_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (fornecedor_txtNome.Text == "Nome do Serviço")
+            if (sender is TextBox tb && tb.Text == tb.Tag?.ToString())
             {
-                fornecedor_txtNome.Text = "";
-                fornecedor_txtNome.Foreground = Brushes.Black;
+                tb.Text = "";
+                tb.Foreground = Brushes.Black;
             }
         }
 
-        private void TxtNome_LostFocus(object sender, RoutedEventArgs e)
+        private void Placeholder_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(fornecedor_txtNome.Text))
+            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
             {
-                fornecedor_txtNome.Text = "Nome do Serviço";
-                fornecedor_txtNome.Foreground = Brushes.Gray;
+                tb.Text = tb.Tag?.ToString() ?? "";
+                tb.Foreground = Brushes.Gray;
             }
         }
-
-        private void TxtValor_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (fornecedor_txtValor.Text == "0.00")
-            {
-                fornecedor_txtValor.Text = "";
-                fornecedor_txtValor.Foreground = Brushes.Black;
-            }
-        }
-
-        private void TxtValor_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(fornecedor_txtValor.Text))
-            {
-                fornecedor_txtValor.Text = "0.00";
-                fornecedor_txtValor.Foreground = Brushes.Gray;
-            }
-        }
-
-        private void TxtCnpj_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (fornecedor_txtCnpj.Text == "CNPJ")
-            {
-                fornecedor_txtCnpj.Text = "";
-                fornecedor_txtCnpj.Foreground = Brushes.Black;
-            }
-        }
-
-        private void TxtCnpj_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(fornecedor_txtCnpj.Text))
-            {
-                fornecedor_txtCnpj.Text = "CNPJ";
-                fornecedor_txtCnpj.Foreground = Brushes.Gray;
-            }
-        }
-        #endregion
 
         private void BtnVoltar_Click(object sender, RoutedEventArgs e)
         {

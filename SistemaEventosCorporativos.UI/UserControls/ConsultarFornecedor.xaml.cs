@@ -1,29 +1,18 @@
-﻿using SistemaEventosCorporativos.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.CORE;
 using SistemaEventosCorporativos.DATA;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SistemaEventosCorporativos.UI.UserControls
 {
-    /// <summary>
-    /// Interação lógica para ConsultarFornecedor.xam
-    /// </summary>
     public partial class ConsultarFornecedor : UserControl
     {
-
-        public event Action? OnVoltar; 
+        public event Action? OnVoltar;
 
         public ConsultarFornecedor()
         {
@@ -35,45 +24,54 @@ namespace SistemaEventosCorporativos.UI.UserControls
         {
             using (var context = new AppDbContext())
             {
-                var fornecedores = context.Fornecedores.ToList();
+                var fornecedores = context.FornecedorEvento
+                    .Include(fe => fe.Fornecedor)
+                    .Include(fe => fe.Evento)    
+                    .ToList();
+
                 dataGridFornecedores.ItemsSource = fornecedores;
             }
         }
 
         private void BtnExcluirFornecedor_Click(object sender, RoutedEventArgs e)
         {
-            if(dataGridFornecedores.SelectedItem is Fornecedor fornecedorSelecionado)
+            if (dataGridFornecedores.SelectedItem is FornecedorEvento fornecedorEventoSelecionado)
             {
                 var resultado = MessageBox.Show(
-                    $"Deseja realmente excluir o participante '{fornecedorSelecionado.NomeServico}'?",
+                    $"Deseja realmente excluir o fornecedor '{fornecedorEventoSelecionado.Fornecedor.NomeServico}'?",
                     "Confirmação",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question
-                    );
+                );
 
-                if( resultado == MessageBoxResult.Yes )
+                if (resultado == MessageBoxResult.Yes)
                 {
-                    using ( var context = new AppDbContext())
+                    using (var context = new AppDbContext())
                     {
-                        context.Fornecedores.Remove( fornecedorSelecionado );
+                        // Remove primeiro a relação FornecedorEvento
+                        context.FornecedorEvento.Remove(fornecedorEventoSelecionado);
+
+                        // Opcional: também remover o fornecedor (caso não seja usado em outros eventos)
+                        // context.Fornecedores.Remove(fornecedorEventoSelecionado.Fornecedor);
+
                         context.SaveChanges();
                     }
 
-                    MessageBox.Show("Fornecedor excluido.");
+                    MessageBox.Show("Fornecedor excluído com sucesso!");
                     CarregarFornecedor();
                 }
-                else
-                {
-                    MessageBox.Show("Selecione um fornecedor para excluir.");
-                }
+            }
+            else
+            {
+                MessageBox.Show("Selecione um fornecedor para excluir.");
             }
         }
 
         private void DataGridFornecedores_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(dataGridFornecedores.SelectedItem is Fornecedor fornecedorSelecionado)
+            if (dataGridFornecedores.SelectedItem is FornecedorEvento fornecedorEventoSelecionado)
             {
-                var editar = new EditarFornecedores(fornecedorSelecionado.Id);
+                var editar = new EditarFornecedores(fornecedorEventoSelecionado.Fornecedor.Id);
 
                 ContentArea.Content = editar;
 
@@ -84,6 +82,5 @@ namespace SistemaEventosCorporativos.UI.UserControls
                 };
             }
         }
-
     }
 }

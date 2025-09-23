@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.CORE;
 using SistemaEventosCorporativos.DATA;
 using System;
 using System.Collections.Generic;
@@ -31,18 +32,19 @@ namespace SistemaEventosCorporativos.UI.UserControls
             InitializeComponent();
             CarregarParticipante();
         }
-
         private void CarregarParticipante()
         {
             using (var context = new AppDbContext())
             {
                 var participantes = context.Participantes
-                                           .Include(p => p.Evento) 
+                                           .AsNoTracking()
                                            .ToList();
 
                 dataGridParticipantes.ItemsSource = participantes;
             }
         }
+
+
 
         private void BtnExcluirParticipantes_Click(object sender, RoutedEventArgs e)
         {

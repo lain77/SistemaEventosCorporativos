@@ -9,21 +9,16 @@ namespace SistemaEventosCorporativos.UI
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e); 
+            base.OnStartup(e);
 
-            using (var context = new AppDbContext())
-            {
-                if (!context.TiposEventos.Any())
-                {
-                    context.TiposEventos.AddRange(
-                        new TipoEvento { Descricao = "Treinamento" },
-                        new TipoEvento { Descricao = "Reunião" },
-                        new TipoEvento { Descricao = "Conferência" },
-                        new TipoEvento { Descricao = "AirShow" }
-                    );
-                    context.SaveChanges();
-                }
-            }
+            // Cria a janela de login
+            var login = new LoginWindow();
+
+            // Define que essa será a MainWindow temporária do app
+            this.MainWindow = login;
+
+            // Mostra a janela
+            login.Show();
         }
     }
 }
