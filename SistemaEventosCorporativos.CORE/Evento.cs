@@ -1,4 +1,5 @@
 ﻿using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.CORE;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace SistemaEventosCorporativos.Core
         public int LotacaoMaxima { get; set; }
         public decimal OrcamentoMaximo { get; set; }
         public int TipoEventoId { get; set; }
+        public ICollection<FornecedorEvento> Fornecedores { get; set; } = new List<FornecedorEvento>();
 
         // FK para Endereco
         public int EnderecoId { get; set; }

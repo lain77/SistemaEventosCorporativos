@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.DATA;
+using SistemaEventosCorporativos.CORE.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,7 @@ namespace SistemaEventosCorporativos.UI.UserControls
         public FornecedoresMaisUtilizados()
         {
             InitializeComponent();
+            CarregarDados();
         }
 
         private void BtnVoltar_Click(object sender, RoutedEventArgs e)
@@ -30,6 +34,26 @@ namespace SistemaEventosCorporativos.UI.UserControls
             if (Application.Current.MainWindow is MainWindow main)
             {
                 main.ContentArea.Content = new Relatórios();
+            }
+        }
+
+        private void CarregarDados()
+        {
+            using (var context = new AppDbContext())
+            {
+                var dados = context.FornecedorEvento
+                    .GroupBy(fe => fe.Fornecedor)
+                    .Select(g => new FornecedorRelatorioDTO
+                    {
+                        NomeFornecedor = g.Key.NomeServico,
+                        TotalQuantidade = g.Count(),
+                        ValorTotal = g.Sum(x => x.Fornecedor.Valor) 
+                    })
+                    .OrderByDescending(x => x.TotalQuantidade)
+                    .Take(10)
+                    .ToList();
+
+                dataGridFornecedores.ItemsSource = dados;
             }
         }
     }

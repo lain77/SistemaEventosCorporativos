@@ -39,10 +39,7 @@ namespace SistemaEventosCorporativos.UI.UserControls
 
         private void AbrirUC(UserControl uc)
         {
-            if (Application.Current.MainWindow is MainWindow main)
-            {
-                main.ContentArea.Content = uc;
-            }
+            RelatoriosContentArea.Content = uc;
         }
     }
 }

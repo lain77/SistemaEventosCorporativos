@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaEventosCorporativos.CORE;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -18,6 +19,8 @@ namespace SistemaEventosCorporativos.Core
         public string CNPJ { get; set; }
 
         public string Tipo { get; set; }
+
+        public ICollection<FornecedorEvento> Eventos { get; set; } = new List<FornecedorEvento>();
 
     }
 }

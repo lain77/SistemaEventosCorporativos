@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.CORE;
 using SistemaEventosCorporativos.DATA;
 using System;
 using System.Globalization;
@@ -22,6 +23,7 @@ namespace SistemaEventosCorporativos.UI.UserControls
             InitializeComponent();
             this.eventoId = eventoId;
             CarregarDados();
+            CarregarFornecedores();
         }
 
         private void CarregarDados()
@@ -30,16 +32,20 @@ namespace SistemaEventosCorporativos.UI.UserControls
             {
                 var evento = context.Eventos
                     .Include(e => e.Endereco)
+                    .Include(e => e.Fornecedores)
+                        .ThenInclude(fe => fe.Fornecedor)
                     .FirstOrDefault(e => e.Id == eventoId);
 
                 if (evento != null)
                 {
+                    // Dados do Evento
                     txtNome.Text = evento.Nome;
                     dpDataInicio.SelectedDate = evento.DataInicio.ToDateTime(TimeOnly.MinValue);
                     dpDataFim.SelectedDate = evento.DataFim.ToDateTime(TimeOnly.MinValue);
                     txtObservacoes.Text = evento.Observacoes;
                     txtLotacao.Text = evento.LotacaoMaxima.ToString();
                     txtOrcamento.Text = evento.OrcamentoMaximo.ToString("F2", CultureInfo.InvariantCulture);
+
                     cbTipoEvento.SelectedValue = evento.TipoEventoId;
 
                     if (evento.Endereco != null)
@@ -51,9 +57,15 @@ namespace SistemaEventosCorporativos.UI.UserControls
                         txtCidade.Text = evento.Endereco.Cidade;
                         txtEstado.Text = evento.Endereco.Estado;
                     }
+
+                    // Fornecedores vinculados
+                    lstFornecedores.ItemsSource = evento.Fornecedores
+                        .Select(fe => fe.Fornecedor)
+                        .ToList();
                 }
             }
         }
+
 
 
         private void BtnSalvar_Click(object sender, RoutedEventArgs e)
@@ -131,5 +143,60 @@ namespace SistemaEventosCorporativos.UI.UserControls
             // 🔹 dispara o evento para o pai cuidar
             OnVoltar?.Invoke();
         }
+
+        private void BtnAdicionarFornecedor_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbFornecedores.SelectedItem is Fornecedor fornecedor)
+            {
+                using (var context = new AppDbContext())
+                {
+                    var existe = context.FornecedorEvento
+                        .Any(fe => fe.EventoId == eventoId && fe.FornecedorId == fornecedor.Id);
+
+                    if (!existe)
+                    {
+                        var fe = new FornecedorEvento
+                        {
+                            EventoId = eventoId,
+                            FornecedorId = fornecedor.Id
+                        };
+                        context.FornecedorEvento.Add(fe);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esse fornecedor já está vinculado ao evento!");
+                    }
+                }
+
+                CarregarDados();
+            }
+            else
+            {
+                MessageBox.Show("Selecione um fornecedor antes de adicionar.");
+            }
+        }
+
+        private void BtnRemoverFornecedor_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstFornecedores.SelectedItem is Fornecedor fornecedor)
+            {
+                var lista = lstFornecedores.Items.Cast<Fornecedor>().ToList();
+                lista.Remove(fornecedor);
+                lstFornecedores.ItemsSource = lista;
+            }
+        }
+
+        private void CarregarFornecedores()
+        {
+            using (var context = new AppDbContext())
+            {
+                var fornecedores = context.Fornecedores.ToList();
+                cbFornecedores.ItemsSource = fornecedores;
+                cbFornecedores.DisplayMemberPath = "NomeServico";
+                cbFornecedores.SelectedValuePath = "Id";
+            }
+        }
+
     }
 }

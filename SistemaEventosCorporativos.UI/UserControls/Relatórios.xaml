@@ -39,25 +39,42 @@
     </UserControl.Resources>
 
     <Grid Background="#F5F5F5" Margin="10">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
 
+        <!-- Menu lateral dos relatórios -->
+        <StackPanel Grid.Column="0" VerticalAlignment="Top" Margin="0,51,10,0">
             <TextBlock Text="Relatórios &amp; Dashboards"
-               FontSize="22"
-               FontWeight="Bold"
-               Foreground="#2C3E50"
-               TextAlignment="Center"
-               Margin="0,0,0,20"/>
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Margin="0,0,0,20"
+                   Foreground="#2C3E50" Width="89"/>
 
-            <Button Content="📅 Agenda dos Participantes" Style="{StaticResource RoundedButton}" Margin="0,5,0,5"
-        Click="BtnAgendaParticipantes_Click"/>
-            <Button Content="👥 Fornecedores Mais Utilizados" Style="{StaticResource RoundedButton}" Margin="0,5,0,5"
-        Click="BtnFornecedoresMaisUtilizados_Click"/>
-            <Button Content="📊 Tipos de Participantes" Style="{StaticResource RoundedButton}" Margin="0,5,0,5"
-        Click="BtnTiposParticipantes_Click"/>
-            <Button Content="💰 Saldo de Orçamento" Style="{StaticResource RoundedButton}" Margin="0,5,0,5"
-        Click="BtnOrcamentoEventos_Click"/>
-
+            <Button Content="📅 Agenda dos Participantes"
+                Style="{StaticResource RoundedButton}"
+                Margin="0,5,0,5"
+                Click="BtnAgendaParticipantes_Click"/>
+            <Button Content="👥 Fornecedores Mais Utilizados"
+                Style="{StaticResource RoundedButton}"
+                Margin="0,5,0,5"
+                Click="BtnFornecedoresMaisUtilizados_Click"/>
+            <Button Content="📊 Tipos de Participantes"
+                Style="{StaticResource RoundedButton}"
+                Margin="0,5,0,5"
+                Click="BtnTiposParticipantes_Click"/>
+            <Button Content="💰 Saldo de Orçamento"
+                Style="{StaticResource RoundedButton}"
+                Margin="0,5,0,5"
+                Click="BtnOrcamentoEventos_Click"/>
         </StackPanel>
 
+        <!-- Área onde as UCs internas vão abrir -->
+        <ContentControl x:Name="RelatoriosContentArea" Grid.Column="1"
+                    Background="White"
+                    Margin="10"
+                    Padding="10"/>
     </Grid>
+
 </UserControl>

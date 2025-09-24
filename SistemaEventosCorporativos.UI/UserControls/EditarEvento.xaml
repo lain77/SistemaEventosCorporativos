@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="850">
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -12,86 +12,134 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Cabeçalho com botão Voltar -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+        <!-- Cabeçalho -->
+        <DockPanel Grid.Row="0" Margin="0,0,0,15">
             <Button Content="← Voltar" Width="100" Click="BtnVoltar_Click"/>
-            <TextBlock Text="Editar Evento" FontSize="20" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Center"/>
-        </StackPanel>
+            <TextBlock Text="Editar Evento"
+                       FontSize="22" FontWeight="Bold"
+                       Margin="15,0,0,0"
+                       VerticalAlignment="Center"/>
+        </DockPanel>
 
         <!-- Conteúdo -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Margin="10">
 
                 <!-- Nome -->
-                <TextBlock Text="Nome do Evento:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtNome" Grid.Row="0" Grid.Column="1" Margin="0,5"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock Text="Nome do Evento:" Width="150" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtNome" Width="300"/>
+                </StackPanel>
 
                 <!-- Datas -->
-                <TextBlock Text="Data Início:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-                <DatePicker x:Name="dpDataInicio" Grid.Row="1" Grid.Column="1" Margin="0,5"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                        <TextBlock Text="Data Início:" Width="150" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="dpDataInicio" Width="150"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Data Fim:" Width="100" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="dpDataFim" Width="150"/>
+                    </StackPanel>
+                </StackPanel>
 
-                <TextBlock Text="Data Fim:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-                <DatePicker x:Name="dpDataFim" Grid.Row="2" Grid.Column="1" Margin="0,5"/>
-
-                <!-- Tipo de Evento -->
-                <TextBlock Text="Tipo de Evento:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-                <ComboBox x:Name="cbTipoEvento" Grid.Row="3" Grid.Column="1" Margin="0,5"
-                          DisplayMemberPath="Descricao" SelectedValuePath="Id"/>
+                <!-- Tipo -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock Text="Tipo de Evento:" Width="150" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cbTipoEvento"
+                              Width="200"
+                              DisplayMemberPath="Descricao"
+                              SelectedValuePath="Id"/>
+                </StackPanel>
 
                 <!-- Observações -->
-                <TextBlock Text="Observações:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtObservacoes" Grid.Row="4" Grid.Column="1" Margin="0,5"/>
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Observações:"/>
+                    <TextBox x:Name="txtObservacoes" Height="80" TextWrapping="Wrap" AcceptsReturn="True"/>
+                </StackPanel>
 
                 <!-- Lotação e Orçamento -->
-                <TextBlock Text="Lotação Máx.:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtLotacao" Grid.Row="5" Grid.Column="1" Margin="0,5" Width="100"/>
-
-                <TextBlock Text="Orçamento Máx.:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtOrcamento" Grid.Row="6" Grid.Column="1" Margin="0,5" Width="150"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                        <TextBlock Text="Lotação Máx.:" Width="150" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtLotacao" Width="100"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Orçamento Máx.:" Width="150" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtOrcamento" Width="120"/>
+                    </StackPanel>
+                </StackPanel>
 
                 <!-- Endereço -->
-                <TextBlock Text="CEP:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtCep" Grid.Row="7" Grid.Column="1" Margin="0,5"/>
+                <GroupBox Header="Endereço" Padding="10" Margin="0,0,0,10">
+                    <UniformGrid Columns="2" Rows="3" Margin="5">
+                        <StackPanel Margin="5">
+                            <TextBlock Text="CEP:"/>
+                            <TextBox x:Name="txtCep"/>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <TextBlock Text="Rua:"/>
+                            <TextBox x:Name="txtRua"/>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <TextBlock Text="Número:"/>
+                            <TextBox x:Name="txtNumero"/>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <TextBlock Text="Bairro:"/>
+                            <TextBox x:Name="txtBairro"/>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <TextBlock Text="Cidade:"/>
+                            <TextBox x:Name="txtCidade"/>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <TextBlock Text="Estado:"/>
+                            <TextBox x:Name="txtEstado"/>
+                        </StackPanel>
+                    </UniformGrid>
+                </GroupBox>
 
-                <TextBlock Text="Rua:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtRua" Grid.Row="8" Grid.Column="1" Margin="0,5"/>
+                <!-- Fornecedores -->
+                <GroupBox Header="Fornecedores Vinculados" Padding="10" Margin="0,0,0,10">
+                    <StackPanel>
 
-                <TextBlock Text="Número:" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtNumero" Grid.Row="9" Grid.Column="1" Margin="0,5" Width="80"/>
+                        <!-- Seletor de fornecedor para adicionar -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBlock Text="Fornecedor:" Width="100" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="cbFornecedores"
+                      Width="250"
+                      DisplayMemberPath="NomeServico"
+                      SelectedValuePath="Id"
+                      Margin="0,0,10,0"/>
+                            <Button Content="Adicionar"
+                    Width="90"
+                    Click="BtnAdicionarFornecedor_Click"/>
+                        </StackPanel>
 
-                <TextBlock Text="Bairro:" Grid.Row="10" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtBairro" Grid.Row="10" Grid.Column="1" Margin="0,5" Width="150"/>
+                        <!-- Lista de fornecedores já vinculados -->
+                        <ListBox x:Name="lstFornecedores"
+                 DisplayMemberPath="NomeServico"
+                 Height="120"
+                 SelectionMode="Single"
+                 Margin="0,0,0,10"/>
 
-                <TextBlock Text="Cidade:" Grid.Row="11" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtCidade" Grid.Row="11" Grid.Column="1" Margin="0,5" Width="150"/>
+                        <!-- Botão para remover -->
+                        <Button Content="Remover Selecionado"
+                Width="160"
+                HorizontalAlignment="Left"
+                Click="BtnRemoverFornecedor_Click"/>
 
-                <TextBlock Text="Estado:" Grid.Row="12" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtEstado" Grid.Row="12" Grid.Column="1" Margin="0,5" Width="50"/>
+                    </StackPanel>
+                </GroupBox>
 
-                <!-- Botão Salvar -->
-                <Button Content="💾 Salvar" Grid.Row="13" Grid.Column="1" Width="120" Height="35" Margin="0,15,0,0"
-                        HorizontalAlignment="Left" Click="BtnSalvar_Click"/>
-            </Grid>
+                <!-- Salvar -->
+                <Button Content="💾 Salvar"
+                        Width="140" Height="40"
+                        HorizontalAlignment="Center"
+                        Margin="0,15,0,0"
+                        Click="BtnSalvar_Click"/>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>
