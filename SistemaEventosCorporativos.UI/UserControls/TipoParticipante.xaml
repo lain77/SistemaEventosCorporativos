@@ -6,13 +6,31 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
-
     <Grid Background="#F5F5F5" Margin="10">
-        <StackPanel>
-            <Button Content="Voltar" Width="100" Margin="0,0,0,10" Click="BtnVoltar_Click"/>
-            <TextBlock Text="Tipos de Participantes Mais Frequentes" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <DataGrid x:Name="dataGridTipos" AutoGenerateColumns="False" Height="300"
+        <!-- Lista de eventos -->
+        <StackPanel Grid.Column="0">
+            <TextBlock Text="Eventos"
+                       FontSize="18" FontWeight="Bold"
+                       Margin="0,0,0,10"/>
+            <ListBox x:Name="listEventos"
+                     DisplayMemberPath="Nome"
+                     SelectedValuePath="Id"
+                     SelectionChanged="ListEventos_SelectionChanged"
+                     Height="400"/>
+        </StackPanel>
+
+        <!-- DataGrid de tipos de participantes -->
+        <StackPanel Grid.Column="2">
+            <TextBlock Text="Tipos de Participantes"
+                       FontSize="18" FontWeight="Bold"
+                       Margin="0,0,0,10"/>
+            <DataGrid x:Name="dataGridTipos" AutoGenerateColumns="False" Height="400"
                       CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
                       AlternatingRowBackground="#F9F9F9" RowBackground="White"
                       GridLinesVisibility="Horizontal" HeadersVisibility="Column" ColumnHeaderHeight="30">

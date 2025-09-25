@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaEventosCorporativos.DATA;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace SistemaEventosCorporativos.UI.UserControls
         public OrcamentoEventos()
         {
             InitializeComponent();
+            CarregarOrcamentos();
         }
 
         private void BtnVoltar_Click(object sender, RoutedEventArgs e)
@@ -30,6 +32,28 @@ namespace SistemaEventosCorporativos.UI.UserControls
             if (Application.Current.MainWindow is MainWindow main)
             {
                 main.ContentArea.Content = new Relatórios();
+            }
+        }
+
+        private void CarregarOrcamentos()
+        {
+            using (var context = new AppDbContext())
+            {
+                var dados = context.Eventos
+                    .Select(ev => new
+                    {
+                        Nome = ev.Nome,
+                        OrcamentoMax = ev.OrcamentoMaximo,
+                        ValorTotalFornecedores = context.FornecedorEvento
+                            .Where(fe => fe.EventoId == ev.Id)
+                            .Sum(fe => fe.Fornecedor.Valor),
+                        Saldo = ev.OrcamentoMaximo - context.FornecedorEvento
+                            .Where(fe => fe.EventoId == ev.Id)
+                            .Sum(fe => fe.Fornecedor.Valor)
+                    })
+                    .ToList();
+
+                dataGridOrcamento.ItemsSource = dados;
             }
         }
     }

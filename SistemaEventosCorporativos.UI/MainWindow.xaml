@@ -5,26 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SistemaEventosCorporativos.UI"
         mc:Ignorable="d"
-        Title="Sistema de Eventos" Height="500" Width="850"
+        Title="Sistema de Eventos" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen"
         Background="#121212">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="240"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Menu lateral estilizado -->
-        <Border Grid.Column="0" CornerRadius="0,15,15,0" 
-                Background="#1E1E1E"
-                SnapsToDevicePixels="True">
+        <!-- Área de conteúdo à esquerda -->
+        <Border Grid.Column="0" Margin="15" CornerRadius="15" Background="#F5F5F5" Padding="15" SnapsToDevicePixels="True">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="15" ShadowDepth="3" Opacity="0.2"/>
+            </Border.Effect>
+            <Border Background="White" CornerRadius="10" Padding="10">
+                <ContentControl x:Name="ContentArea"/>
+            </Border>
+        </Border>
+
+        <!-- Menu lateral à direita -->
+        <Border Grid.Column="1" CornerRadius="15,0,0,15" Background="#1E1E1E" SnapsToDevicePixels="True">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" BlurRadius="10" ShadowDepth="2" Opacity="0.4"/>
             </Border.Effect>
 
             <StackPanel Margin="20">
-
                 <!-- Estilo base para botões -->
                 <StackPanel.Resources>
                     <Style TargetType="Button">
@@ -46,8 +53,7 @@
                                             BorderThickness="{TemplateBinding BorderThickness}"
                                             CornerRadius="8"
                                             SnapsToDevicePixels="True">
-                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
@@ -81,20 +87,36 @@
                 <Button Content="Consultar Fornecedores" Click="BtnAbrirEditarFornecedor_Click"/>
                 <Button Content="Consultar Participantes" Click="BtnAbrirEditarParticipante_Click"/>
                 <Button Content="Relatórios" Click="BtnAbrirRelatorios_Click"/>
+
             </StackPanel>
         </Border>
 
-        <!-- Área de conteúdo -->
-        <Border Grid.Column="1" Margin="15" CornerRadius="15" Background="#F5F5F5"
-                Padding="15" SnapsToDevicePixels="True">
-            <Border.Effect>
-                <DropShadowEffect Color="#000000" BlurRadius="15" ShadowDepth="3" Opacity="0.2"/>
-            </Border.Effect>
+        <!-- Loading overlay centralizado -->
+        <Grid x:Name="LoadingOverlay" Background="#88000000" Visibility="Collapsed" Opacity="0">
+            <!-- Triggers primeiro -->
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Grid.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="LoadingOverlay"
+                                             Storyboard.TargetProperty="Opacity"
+                                             From="0" To="1" Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
 
-            <!-- ContentControl dentro de Border para cantos arredondados -->
-            <Border Background="White" CornerRadius="10" Padding="10">
-                <ContentControl x:Name="ContentArea"/>
-            </Border>
-        </Border>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <!-- SR-71 girando -->
+                <Image x:Name="ImgSR71" Source="/SistemaEventosCorporativos.UI;component/Assets/sr71.png"
+                       Width="150" Height="150" RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <RotateTransform x:Name="SR71RotateTransform"/>
+                    </Image.RenderTransform>
+                </Image>
+                <TextBlock Text="Carregando..." Foreground="White" FontSize="18" FontWeight="Bold"
+                           Margin="0,20,0,0" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

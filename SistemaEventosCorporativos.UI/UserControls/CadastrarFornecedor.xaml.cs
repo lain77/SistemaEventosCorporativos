@@ -24,21 +24,49 @@ namespace SistemaEventosCorporativos.UI.UserControls
             {
                 using (var context = new AppDbContext())
                 {
+                    // Busca o evento selecionado
+                    int eventoId = (int)cbEvento.SelectedValue;
+                    var evento = context.Eventos.FirstOrDefault(ev => ev.Id == eventoId);
+
+                    if (evento == null)
+                    {
+                        MessageBox.Show("Evento não encontrado.");
+                        return;
+                    }
+
+                    // Cria fornecedor
                     Fornecedor fornecedor = new Fornecedor
                     {
                         NomeServico = txtNomeServico.Text,
                         CNPJ = txtCnpj.Text,
                         Valor = decimal.Parse(txtValor.Text),
-                        Tipo = txtTipo.Text
                     };
 
-                    context.Fornecedores.Add(fornecedor);
-                    context.SaveChanges(); 
+                    // Verifica se ultrapassa orçamento
+                    // Aqui você poderia somar o total de fornecedores já cadastrados
+                    decimal totalFornecedores = context.FornecedorEvento
+                        .Where(fe => fe.EventoId == eventoId)
+                        .Join(context.Fornecedores,
+                              fe => fe.FornecedorId,
+                              f => f.Id,
+                              (fe, f) => f.Valor)
+                        .Sum();
 
+                    if (totalFornecedores + fornecedor.Valor > evento.OrcamentoMaximo)
+                    {
+                        MessageBox.Show("Você não pode ultrapassar o orçamento do evento.");
+                        return;
+                    }
+
+                    // Salva fornecedor
+                    context.Fornecedores.Add(fornecedor);
+                    context.SaveChanges();
+
+                    // Associa fornecedor ao evento
                     FornecedorEvento fornecedorEvento = new FornecedorEvento
                     {
                         FornecedorId = fornecedor.Id,
-                        EventoId = (int)cbEvento.SelectedValue
+                        EventoId = eventoId
                     };
 
                     context.FornecedorEvento.Add(fornecedorEvento);

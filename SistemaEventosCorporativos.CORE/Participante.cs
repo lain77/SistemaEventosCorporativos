@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaEventosCorporativos.CORE;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace SistemaEventosCorporativos.Core
         public string CPF { get; set; }
         public string Telefone { get; set; }
         public string Tipo { get; set; }
+        public ICollection<ParticipanteEvento> Eventos { get; set; } = new List<ParticipanteEvento>();
 
     }
 }

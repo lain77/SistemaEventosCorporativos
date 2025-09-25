@@ -1,35 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SistemaEventosCorporativos.DATA;
+using SistemaEventosCorporativos.Core;
+using SistemaEventosCorporativos.CORE;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SistemaEventosCorporativos.UI.UserControls
 {
-    /// <summary>
-    /// Interação lógica para TipoParticipante.xam
-    /// </summary>
     public partial class TipoParticipante : UserControl
     {
         public TipoParticipante()
         {
             InitializeComponent();
+            CarregarEventos();
         }
 
-        private void BtnVoltar_Click(object sender, RoutedEventArgs e)
+        private void CarregarEventos()
         {
-            if (Application.Current.MainWindow is MainWindow main)
+            using (var context = new AppDbContext())
             {
-                main.ContentArea.Content = new Relatórios();
+                var eventos = context.Eventos
+                    .Select(ev => new { ev.Id, ev.Nome })
+                    .ToList();
+
+                listEventos.ItemsSource = eventos;
+            }
+        }
+
+        private void ListEventos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listEventos.SelectedValue == null) return;
+
+            int eventoId = (int)listEventos.SelectedValue;
+
+            using (var context = new AppDbContext())
+            {
+                var tiposComContagem = context.ParticipanteEvento
+                    .Where(pe => pe.EventoId == eventoId)
+                    .Select(pe => pe.Participante)
+                    .GroupBy(p => p.Tipo.ToUpper())
+                    .Select(g => new
+                    {
+                        Tipo = g.Key,
+                        Quantidade = g.Count()
+                    })
+                    .OrderByDescending(x => x.Quantidade)
+                    .ToList();
+
+                dataGridTipos.ItemsSource = tiposComContagem;
             }
         }
     }

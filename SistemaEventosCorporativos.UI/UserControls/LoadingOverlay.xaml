@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="SistemaEventosCorporativos.UI.UserControls.LoadingOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="Auto" Height="Auto">
+    <Grid Background="#80000000" Visibility="Collapsed" x:Name="RootGrid">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ProgressBar Width="100" Height="20" IsIndeterminate="True"/>
+            <TextBlock Text="Carregando..." Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -17,7 +17,6 @@ namespace SistemaEventosCorporativos.UI.UserControls
         {
             InitializeComponent();
             CarregarEventos();
-
         }
 
         private void BtnSalvar_Click(object sender, RoutedEventArgs e)
@@ -59,7 +58,7 @@ namespace SistemaEventosCorporativos.UI.UserControls
                             Nome = txtNome.Text,
                             CPF = cpfDigitado,
                             Telefone = txtTelefone.Text,
-                            Tipo = txtTipo.Text
+                            Tipo = txtTipo.Text.ToUpper()
                         };
                         context.Participantes.Add(participante);
                         context.SaveChanges();
@@ -117,7 +116,6 @@ namespace SistemaEventosCorporativos.UI.UserControls
                 cbEvento.SelectedValuePath = "Id";
             }
         }
-
 
     }
 }
