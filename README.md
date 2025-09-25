@@ -98,6 +98,11 @@ Aplique as migrations ou use o script SQL fornecido (EventosDB.sql).
 
 Compile e execute o projeto.
 
+TELA: Aperte o avião para fazer o login.
+
+Usuario: admin
+Senha: 123
+
 Entregáveis
 
 Código-fonte completo no repositório.
