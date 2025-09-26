@@ -1,21 +1,29 @@
-﻿using System.Windows;
+﻿using SistemaEventosCorporativos.UI.LoginUserControls;
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 
 namespace SistemaEventosCorporativos.UI
 {
     public partial class LoginWindow : Window
     {
-        public LoginWindow() 
+        public LoginWindow()
         {
             InitializeComponent();
- 
         }
 
-        private void BtnEntrar_Click(object sender, RoutedEventArgs e)
+        private void Sr71_Click(object sender, MouseButtonEventArgs e)
         {
-            var main = new MainWindow();
-            main.Show();
+            ContentArea.Content = new LoginUserControl();
 
-            this.Close();
+            if (sender is Border border && border.Effect is DropShadowEffect shadow)
+            {
+                shadow.BlurRadius = 50; 
+                shadow.Opacity = 0.7;
+            }
         }
     }
 }
