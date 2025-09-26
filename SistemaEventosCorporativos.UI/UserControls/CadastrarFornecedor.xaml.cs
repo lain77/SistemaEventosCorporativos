@@ -34,16 +34,14 @@ namespace SistemaEventosCorporativos.UI.UserControls
                         return;
                     }
 
-                    // Cria fornecedor
                     Fornecedor fornecedor = new Fornecedor
                     {
                         NomeServico = txtNomeServico.Text,
                         CNPJ = txtCnpj.Text,
                         Valor = decimal.Parse(txtValor.Text),
+                        Tipo = txtTipo.Text
                     };
 
-                    // Verifica se ultrapassa orçamento
-                    // Aqui você poderia somar o total de fornecedores já cadastrados
                     decimal totalFornecedores = context.FornecedorEvento
                         .Where(fe => fe.EventoId == eventoId)
                         .Join(context.Fornecedores,
@@ -58,11 +56,9 @@ namespace SistemaEventosCorporativos.UI.UserControls
                         return;
                     }
 
-                    // Salva fornecedor
                     context.Fornecedores.Add(fornecedor);
                     context.SaveChanges();
 
-                    // Associa fornecedor ao evento
                     FornecedorEvento fornecedorEvento = new FornecedorEvento
                     {
                         FornecedorId = fornecedor.Id,

@@ -26,6 +26,11 @@
                         <TextBlock Text="Valor:" Width="150" VerticalAlignment="Center"/>
                         <TextBox Name="txtValor" Width="150"/>
                     </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Tipo:" Width="150" VerticalAlignment="Center"/>
+                        <TextBox Name="txtTipo" Width="150"/>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
 

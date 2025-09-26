@@ -18,6 +18,7 @@ namespace SistemaEventosCorporativos.Core
         [Column("Cnpj")]
         public string CNPJ { get; set; }
 
+        public string Tipo { get; set; }
         public ICollection<FornecedorEvento> Eventos { get; set; } = new List<FornecedorEvento>();
 
     }
